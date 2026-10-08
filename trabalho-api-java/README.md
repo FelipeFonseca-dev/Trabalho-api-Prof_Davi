@@ -14,10 +14,13 @@ mvn spring-boot:run
 Swagger UI: `http://localhost:8080/swagger-ui.html`  
 OpenAPI: `http://localhost:8080/v3/api-docs`
 
-## Escopo
+## Limitações e Escopo do Projeto
 
-API local com catálogo de modelos e previsões mockadas. Fixture igual à referência: 4 modelos ativos, 10 probes e 24 instantes (960 previsões); catálogo também contém modelo inativo. Dados fictícios. Não consulta RIPE Atlas, não treina nem executa modelos, não usa banco de dados e não exige deploy. Classificação e recomendações são regras experimentais, não padrões científicos.
+**Atenção:** Este projeto possui fins estritamente educacionais para a disciplina de APS II. Os consumidores desta API não devem interpretar os endpoints como funcionalidades de produção plenas, devido às seguintes restrições:
 
+* **Dados Estáticos (Mock):** A API não se conecta a bancos de dados reais nem consulta a rede RIPE Atlas ao vivo. Todas as previsões e métricas fornecidas são baseadas em dados estáticos (fixtures) pré-carregados a partir do arquivo `predictions.csv`.
+* **Modelos Preditivos Simulados:** Os algoritmos de Machine Learning listados (como Random Forest ou Decision Tree) não realizam treinamentos ou inferências reais. Eles existem apenas como metadados no catálogo `models.json`.
+* **Regras Experimentais:** A classificação da qualidade da internet (GOOD, MODERATE, UNSTABLE) e as recomendações de uso de rede operam sobre regras de negócio fixas no código, sem validação científica rigorosa.
 ## Estrutura
 
 Separação em controllers, services, repositories, modelos de domínio/DTOs e configuração. API versionada em `/api/v1`, com recursos de health, modelos, localizações, previsões e atividades.
