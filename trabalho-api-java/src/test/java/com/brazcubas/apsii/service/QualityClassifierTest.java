@@ -25,11 +25,24 @@ class QualityClassifierTest {
 
     @Test
     void classifiesRttAtUnstableThresholdAsUnstable() {
-        assertEquals("UNSTABLE", classifier.classify(150.0, 0.0));
+        double rttAtThreshold = 150.0;
+        double packetLoss = 0.0;
+
+        String quality = classifier.classify(rttAtThreshold, packetLoss);
+
+        assertEquals("UNSTABLE", quality);
     }
 
     @Test
     void rejectsNonFiniteRtt() {
-        assertThrows(IllegalArgumentException.class, () -> classifier.classify(Double.NaN, 0.0));
+        double nonFiniteRtt = Double.NaN;
+        double packetLoss = 0.0;
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> classifier.classify(nonFiniteRtt, packetLoss)
+        );
+
+        assertEquals("Prediction metrics must be finite and non-negative", exception.getMessage());
     }
 }
